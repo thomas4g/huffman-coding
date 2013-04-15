@@ -117,6 +117,41 @@ public class HuffmanTests {
         assertEquals("aaaaa", Huffman.decode(tree, enc));
     }
 
+    @Test
+    public void randomTests() {
+        Map<Character, Integer> freqMap;
+        Node tree;
+        Map<Character, EncodedString> encMap;
+        EncodedString enc;
+        String message;
+        StringBuilder builder;
+        Random rand;
+        boolean passed;
+
+
+        for(int i = 0;i<1000;i++) {
+            rand = new Random();
+            builder = new StringBuilder();
+            for(int j =0;j<10000;j++) {
+                builder.append((char)(rand.nextInt(527) + 133));
+            }
+            message = builder.toString();
+            freqMap = Huffman.buildFrequencyMap(message);
+            tree = Huffman.buildHuffmanTree(freqMap);
+            encMap = Huffman.buildEncodingMap(tree);
+            enc = Huffman.encode(encMap, message);
+            if(i % 50 == 0) {
+                System.out.println("Test " + i + " of 10000");
+                System.out.println(message);
+            }
+            passed = message.equals(Huffman.decode(tree, enc));
+            if(!passed)
+                System.out.println("FAILED: Message was: " + message);
+            assertTrue(passed);
+
+        }
+    }
+
 
 
 

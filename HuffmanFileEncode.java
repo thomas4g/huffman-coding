@@ -226,12 +226,14 @@ public class HuffmanFileEncode {
             result = q % 2 + result;
             q /=2;
         }
-        if(num < 0)
-            result = result + '1';
-        else
-            result = result + '0';
+        
 
-        while(result.length() < 8)
+        while(result.length() < 7)
+            result = '0' + result;
+
+        if(num < 0)
+            result = '1' + result;
+        else
             result = '0' + result;
         return result;
     }
@@ -244,10 +246,12 @@ public class HuffmanFileEncode {
      */
     private static byte fromBinary(String binary) {
         byte result = 0;
-        for(int i = 0;i<binary.length() - 1;i++) {
+        for(int i = 1;i<binary.length();i++) {
             int c = Integer.parseInt(binary.substring(i, i+1));
-            result += c == 1 ? (int)Math.pow(2, (binary.length() - 1 - i) - 1) : 0;
+            result += c == 1 ? (int)Math.pow(2, (binary.length() - 1 - i)) : 0;
         }
-        result *= binary.charAt(binary.length() - 1) == '0' ? 1 : -1;
+        //10000000
+        result *= binary.charAt(0) == '0' ? 1 : -1;
         return result;
     }
+}
