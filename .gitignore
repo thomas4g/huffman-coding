@@ -1,1 +1,3 @@
 *.class
+*.tree
+*.backup
